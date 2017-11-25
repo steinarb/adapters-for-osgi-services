@@ -1,0 +1,82 @@
+* Adapters for OSGi Services
+
+When using [[http://blog.vogella.com/2016/06/21/getting-started-with-osgi-declarative-services/][OSGi Declarative Services]] or any other form of OSGi injections, it is nice not to have to clutter up the code with checks for whether the service is present or not. An example: if your DS component gets both an [[https://osgi.org/javadoc/r4v42/org/osgi/service/log/LogService.html][OSGi log service]] and a [[https://osgi.org/javadoc/r4v42/org/osgi/service/jdbc/DataSourceFactory.html][DataSourceFactory]] service injected, and you would like to set up your database at the point of injection, and the database setup fails before the log service has been injected, you still would like the log message to be preserved.
+
+Also, when exposing servlets as declarative services, setting injections directly into servlet fields is frowned upon by analyisis tools like [[https://www.sonarqube.org][SonarQube]]. SonarQube would like all fields of a servlet to be final.
+
+At that point you will either have to resolve a SonarQube bug as a false positive, or live with that bug forever, or use some kind of adapter for the service.  If you go for the final solution you can write an adapter on your own, or you can use one of these.
+
+** Status
+
+[[https://travis-ci.org/steinarb/adapters-for-osgi-services][file:https://travis-ci.org/steinarb/adapters-for-osgi-services.svg?branch=master]] [[https://coveralls.io/r/steinarb/adapters-for-osgi-services][file:https://coveralls.io/repos/steinarb/adapters-for-osgi-services/badge.svg]]
+
+*** SonarCloud
+
+[[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=lines#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=coverage#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_coverage#.svg]]
+
+
+** List of Adapters
+
+*** OSGi Log Service Adapter
+
+**** Setting up maven dependencies for the LogService adapter
+
+This is the compile and test dependency for the LogService adapter.  The "<scope>provided</provided>" setting makes the maven-bundle-plugin understand that this is a dependency that will be provided at runtime.  The setting also makes karaf-maven-plugin understand that the bundle should not be loaded and started by the karaf feature attached to this bundle project.
+
+Add the following to the <dependencies> section of the POM of your OSGi bundle project:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgi.service.adapters</groupId>
+      <artifactId>logservice</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>provided</scope>
+  </dependencyS
+#+END_SRC
+
+**** Setting up a karaf feature dependency
+
+In the karaf feature template file for your bundle project, i.e. src/main/feature/feature.xml, add the maven coordinates of the feature repository holding the feature, and add a feature dependency to the log service adapter feature:
+#+BEGIN_SRC xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <features>
+      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.0.0-SNAPSHOT/xml/features</repository>
+      <feature name="${karaf-feature-name}">
+          <feature>adapter-for-osgi-logservice</feature>
+      </feature>
+  </features>
+#+END_SRC
+
+**** Using the LogService adapter in Java code
+
+The code example for using the LogService adapter, is an [[http://blog.vogella.com/2016/06/21/getting-started-with-osgi-declarative-services/][OSGi Declarative Services (DS)]] component.
+
+In the example, the @Component has a final field of type LogServiceAdapter.  This LogServiceAdapter can be used as a LogService whether the service has been injected or not.  When the LogService is injected the saved log messages are output (the original time stamp of the log message is not preserved, because the LogService doesn't have any way of setting it.
+
+#+BEGIN_SRC java
+  import javax.servlet.http.HttpServlet;
+  import javax.servlet.http.HttpServletRequest;
+  import javax.servlet.http.HttpServletResponse;
+  import no.priv.bang.osgi.service.adapters.logservice.LogServiceAdapter;
+
+
+  @Component(service={Servlet.class}, property={"alias=/my-servlet"} )
+  public class MyServlet extends HttpServlet {
+      private final LogServiceAdapter logservice;
+
+      @Reference
+      public void setLogservice(LogService logservice) {
+          this.logservice.setLogService(logservice);
+      }
+
+      @Override
+      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+          ...
+      }
+  }
+#+END_SRC
+
+** License
+
+This software is licensed under the Apache License, version 2.
+
+See the LICENSE files for details.
