@@ -21,6 +21,8 @@
     <packaging>pom</packaging>
 
     <name>Adapters for OSGi services</name>
+    <description>Java OSGi library bundles containing classes implementing OSGi service interfaces and intended for wrapping injected OSGi services. The idea is to avoid clutter from guarding against NullPointerReference exceptions in the code using the injected services.</description>
+    <url>https://github.com/steinarb/adapters-for-osgi-services</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -249,6 +251,26 @@
             </extension>
         </extensions>
     </build>
+
+    <licenses>
+        <license>
+            <name>Apache License - v 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Steinar Bang</name>
+            <email>sb@dod.no</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/steinarb/adapters-for-osgi-services.git</url>
+        <connection>scm:git:https://github.com/steinarb/adapters-for-osgi-services.git</connection>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
