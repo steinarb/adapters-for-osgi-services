@@ -242,6 +242,14 @@
                     </coberturaReports>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <releaseProfiles>release-sign-artifact</releaseProfiles>
+                </configuration>
+            </plugin>
         </plugins>
         <extensions>
             <extension>
