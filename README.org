@@ -28,7 +28,7 @@ Add the following to the <dependencies> section of the POM of your OSGi bundle p
   <dependency>
       <groupId>no.priv.bang.osgi.service.adapters</groupId>
       <artifactId>logservice</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0</version>
       <scope>provided</scope>
   </dependencyS
 #+END_SRC
@@ -39,7 +39,7 @@ In the karaf feature template file for your bundle project, i.e. src/main/featur
 #+BEGIN_SRC xml
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <features>
-      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.0.0-SNAPSHOT/xml/features</repository>
+      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.0.0/xml/features</repository>
       <feature name="${karaf-feature-name}">
           <feature>adapter-for-osgi-logservice</feature>
       </feature>
