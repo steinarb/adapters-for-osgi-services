@@ -22,7 +22,7 @@
 
     <artifactId>service-adapters-karaf</artifactId>
     <packaging>pom</packaging>
-    <name>Karaf featue repository for the OSGi servuce adapters</name>
+    <name>Karaf feature repository for the OSGi service adapters</name>
 
     <properties>
         <karaf-feature-name>osgi-service-adapters</karaf-feature-name>
