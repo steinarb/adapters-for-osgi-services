@@ -36,6 +36,7 @@
     </properties>
 
     <modules>
+        <module>service-mocks</module>
         <module>logservice</module>
         <module>service-adapters-karaf</module>
     </modules>

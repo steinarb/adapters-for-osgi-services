@@ -13,8 +13,6 @@ At that point you will either have to resolve a SonarQube bug as a false positiv
 *** SonarCloud
 
 [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=lines#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=coverage#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/badges/measure?key=no.priv.bang.osgi.service.adapters%3Aadapters&metric=new_coverage#.svg]]
-
-
 ** List of Adapters
 
 *** OSGi Log Service Adapter
@@ -74,7 +72,38 @@ In the example, the @Component has a final field of type LogServiceAdapter.  Thi
       }
   }
 #+END_SRC
+** Test utilities
+This is a library of implementations of the OSGi services interfaces that are intended for use in unit tests.
+*** Maven dependency
+Add the following to the POM of the project(s) that wants to use these classes:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgi.service.adapters</groupId>
+      <artifactId>service-mocks</artifactId>
+      <version>1.0.1</version>
+      <scope>test</scope>
+  </dependency>
+#+END_SRC
+*** The MockLogService
+The MockLogService has a method getLogmessages() that can be used to retrieve the messages that have been logged.
 
+In 90% of the cases it's enough to just verify that messages have been logged at all (or verify that messages have not been logged).
+
+Code example:
+#+BEGIN_SRC java
+  @Test
+  public void testGetJdbcConnectionPropertiesApplicationPropertiesThrowsIOException() throws IOException {
+      MockLogService logservice = new MockLogService();
+
+      // Verify that there are no log messages before the configuration property class is created
+      assertEquals(0, logservice.getLogmessages().size());
+
+      SonarCollectorConfiguration configuration = new SonarCollectorConfigurationWithApplicationPropertiesThrowingIOException(logservice);
+
+      // Verify that a single log message had been logged
+      assertEquals(1, logservice.getLogmessages().size());
+  }
+#+END_SRC
 ** License
 
 This software is licensed under the Apache License, version 2.

@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 
-import no.priv.bang.osgi.service.adapters.logservice.mocks.MockLogService;
+import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 @SuppressWarnings("rawtypes")
 public class LogServiceAdapterTest {
