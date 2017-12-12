@@ -38,6 +38,7 @@
     <modules>
         <module>service-mocks</module>
         <module>logservice</module>
+        <module>jdbc</module>
         <module>service-adapters-karaf</module>
     </modules>
 
@@ -213,6 +214,7 @@
                     <show>private</show>
                     <links>
                         <link>https://osgi.org/javadoc/r6/cmpn/</link>
+                        <link>https://osgi.org/javadoc/r6/enterprise/</link>
                     </links>
                 </configuration>
                 <executions>
