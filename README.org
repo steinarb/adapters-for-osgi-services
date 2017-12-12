@@ -104,6 +104,17 @@ Code example:
       assertEquals(1, logservice.getLogmessages().size());
   }
 #+END_SRC
+** Release history
+*** Version 1.0.1
+
+Changes:
+ - Adds an adapter for the [[https://osgi.org/javadoc/r6/enterprise/org/osgi/service/jdbc/DataSourceFactory.html][OSGi DataSourceFactory service]]
+ - Adds a library of mock services for use in JUnit tests
+
+*** Version 1.0.0
+The initial release.
+
+Contains just the adapter for the [[https://osgi.org/javadoc/r6/cmpn/org/osgi/service/log/LogService.html][OSGi LogService]].
 ** License
 
 This software is licensed under the Apache License, version 2.
