@@ -211,6 +211,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <show>private</show>
+                    <links>
+                        <link>https://osgi.org/javadoc/r6/cmpn/</link>
+                    </links>
                 </configuration>
                 <executions>
                     <execution>
