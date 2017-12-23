@@ -72,6 +72,120 @@ In the example, the @Component has a final field of type [[https://static.javado
       }
   }
 #+END_SRC
+*** OSGi JDBC DataSourceFactory
+
+The [[https://osgi.org/javadoc/r6/enterprise/org/osgi/service/jdbc/DataSourceFactory.html][OSGi DataSourceFactory service]] works as a plugin point for various JDBC drivers.  Implementations for some RDBMSes are provided by [[https://github.com/ops4j/org.ops4j.pax.jdbc#pax-jdbc][pax-jdbc]] (e.g. derby, hsql, mssql, oracle, mysql, maridb), implementations for others are provided natively (e.g. The PostgreSQL JDBC driver).
+
+**** Setting up maven dependencies for the DataSourceFactory adapter
+This is the compile and test dependency for the DataSourceFactory adapter.  The "<scope>provided</provided>" setting makes the maven-bundle-plugin understand that this is a dependency that will be provided at runtime.  The setting also makes karaf-maven-plugin understand that the bundle should not be loaded and started by the karaf feature attached to this bundle project.
+
+Add the following to the <dependencies> section of the POM of your OSGi bundle project:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgi.service.adapters</groupId>
+      <artifactId>jdbc</artifactId>
+      <version>1.0.1</version>
+      <scope>provided</scope>
+  </dependencyS
+#+END_SRC
+**** Setting up a karaf feature dependency for the DataSourceFactory adapter
+
+This helps apache karaf find the OSGi bundle for the DataSourceFactory adapter at runtime. Adding a feature depdency like this, will make Apache karaf download the DatSourceFactory adapter's OSGi bundle from maven central and install it in its OSGi runtime, and start the bundle, when you load and start the bundle that needs it.
+
+In the karaf feature template file for your bundle project, i.e. src/main/feature/feature.xml, add the maven coordinates of the feature repository holding the feature, and add a feature dependency to the log service adapter feature:
+#+BEGIN_SRC xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <features>
+      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.0.1/xml/features</repository>
+      <feature name="${karaf-feature-name}">
+          <feature>adapters-for-osgi-jdbc-services</feature>
+      </feature>
+  </features>
+#+END_SRC
+**** Using the DataSourceFactory adapter i Java code
+
+
+The code example for using the DataSourceFactory adapter, is an [[http://blog.vogella.com/2016/06/21/getting-started-with-osgi-declarative-services/][OSGi Declarative Services (DS)]] component.
+
+In the example, the @Component has a final field of type [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/adapters/jdbc/DataSourceFactoryAdapter.html][DataSourceFactoryAdapter]].  This [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/adapters/jdbc/DataSourceFactoryAdapter.html][DataSourceFactoryAdapter]] can be used as a LogService whether the service has been injected or not.  When the LogService is injected the saved log messages are output (the original time stamp of the log message is not preserved, because the LogService doesn't have any way of setting it.
+
+The interesting bits happens in the activate() method: this is where a new database connection is created.
+
+The activate() method is called initially when the component is activated. The method will also be called when the component's configuration is created from the command line of the apache karaf console.
+
+#+BEGIN_SRC java
+  package myservlet;
+
+  import javax.servlet.http.HttpServlet;
+  import javax.servlet.http.HttpServletRequest;
+  import javax.servlet.http.HttpServletResponse;
+  import javax.sql.DataSource;
+  import org.osgi.service.jdbc.DataSourceFactory;
+  import org.osgi.service.component.annotations.Activate;
+  import org.osgi.service.component.annotations.Component;
+  import org.osgi.service.component.annotations.Reference;
+  import no.priv.bang.osgi.service.adapters.jdbc.DataSourceAdapter;
+  import no.priv.bang.osgi.service.adapters.jdbc.DataSourceFactoryAdapter;
+
+
+  @Component(service={Servlet.class}, property={"alias=/my-servlet"} )
+  public class MyServlet extends HttpServlet {
+      private final DataSourceAdapter datasourcefactory;
+      private final DataSourceFactoryAdapter datasourcefactory;
+
+      @Reference
+      public void setDataSourceFactory(DataSourceFactory factory) {
+          this.datasourcefactory.setDataSourceFactory(factory);
+      }
+
+      @Activate
+      public void activate(Map<String, Object> config) {
+          Properties properties = new Properties();
+          properties.setProperty(DataSourceFactory.JDBC_URL, config.get("myservlet.jdbc.url"));
+          properties.setProperty(DataSourceFactory.JDBC_USER, config.get("myservlet.jdbc.user"));
+          properties.setProperty(DataSourceFactory.JDBC_PASSWORD, config.get("myservlet.jdbc.password"));
+          try {
+              datasource.setDatasource(datasourcefactory.createDataSource(properties));
+          } catch (SQLException e) {
+              datasource.setDatasource(null);
+          }
+      }
+
+      @Override
+      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+          ...
+          try {
+              try (Connection connection = dataSource.getConnection()) {
+                  try (PreparedStatement statement = connection.prepareStatement("select * from some_table")) {
+                      ...
+                  }
+              }
+          } catch (SQLException e) {
+              throw new ServletException("Failed to read from database when handling POST", e); // Note: SonarQube doesn't like this throw
+          }
+      }
+  }
+#+END_SRC
+
+/NOTE/: The [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/adapters/jdbc/DataSourceAdapter.html#getConnection--][DataSourceAdapter.getConnetion()]] method will never throw a NullPointerException. If the adapter doesn't wrap anything, this method won't fail, but return a null connection, which is safe to use in a try-with-resource: the try clause won't be entered and no close will be attempted.
+
+***** Creating JDBC configuration for the example component
+
+Configuration for a component in apache karaf can be created from the command line.  To create the JDBC configuration for the code example above, go to the karaf console (the command line presented when starting karaf from a command line, or when doing SSH to a running karaf), and give the following commands:
+#+BEGIN_EXAMPLE
+  config:edit myservlet.MyServlet
+  config:property-set myservlet.jdbc.url "jdbc:postgresql://db.server.com/myservletdb"
+  config:property-set myservlet.jdbc.user "karaf"
+  config:property-set myservlet.jdbc.password "supersecretdonttellanyone"
+  config:update
+#+END_EXAMPLE
+
+The configuration name argument to the "config:edit" command should match the fully qualified classname of the OSGi component.
+
+When ENTER is pressed on the config:update command, the activate() method of the component is called and given the updated configuration.
+
+The configuration created this way is persisted in karaf's "etc" directory and survives both stops and starts of the karaf service, and uninstalls, reinstalls and updates of the OSGi component.
+
 ** Test utilities
 This is a library of implementations of the OSGi services interfaces that are intended for use in unit tests.
 *** Maven dependency
