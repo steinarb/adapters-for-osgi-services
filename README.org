@@ -48,7 +48,7 @@ In the karaf feature template file for your bundle project, i.e. src/main/featur
 
 The code example for using the LogService adapter, is an [[http://blog.vogella.com/2016/06/21/getting-started-with-osgi-declarative-services/][OSGi Declarative Services (DS)]] component.
 
-In the example, the @Component has a final field of type LogServiceAdapter.  This LogServiceAdapter can be used as a LogService whether the service has been injected or not.  When the LogService is injected the saved log messages are output (the original time stamp of the log message is not preserved, because the LogService doesn't have any way of setting it.
+In the example, the @Component has a final field of type [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/adapters/logservice/LogServiceAdapter.html][LogServiceAdapter]].  This [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/adapters/logservice/LogServiceAdapter.html][LogServiceAdapter]] can be used as a LogService whether the service has been injected or not.  When the LogService is injected the saved log messages are output (the original time stamp of the log message is not preserved, because the LogService doesn't have any way of setting it.
 
 #+BEGIN_SRC java
   import javax.servlet.http.HttpServlet;
