@@ -85,7 +85,7 @@ Add the following to the POM of the project(s) that wants to use these classes:
   </dependency>
 #+END_SRC
 *** The MockLogService
-The MockLogService has a method getLogmessages() that can be used to retrieve the messages that have been logged.
+The [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/mocks/logservice/MockLogService.html][MockLogService]] has a method [[https://static.javadoc.io/no.priv.bang.osgi.service.adapters/adapters/1.0.1/no/priv/bang/osgi/service/mocks/logservice/MockLogService.html#getLogmessages--][getLogmessages()]] that can be used to retrieve the messages that have been logged.
 
 In 90% of the cases it's enough to just verify that messages have been logged at all (or verify that messages have not been logged).
 
