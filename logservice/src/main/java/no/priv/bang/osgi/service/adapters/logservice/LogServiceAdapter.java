@@ -21,11 +21,11 @@ import java.util.List;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 
-import no.priv.bang.osgi.service.adapters.logservice.internal.LevelAndMessage;
-import no.priv.bang.osgi.service.adapters.logservice.internal.LevelAndMessageAndException;
+import no.priv.bang.osgi.service.adapters.logservice.internal.SavedLevelAndMessage;
+import no.priv.bang.osgi.service.adapters.logservice.internal.SavedLevelAndMessageAndExceptn;
 import no.priv.bang.osgi.service.adapters.logservice.internal.SavedLogMessage;
-import no.priv.bang.osgi.service.adapters.logservice.internal.ServiceReferenceAndLevelAndMessage;
-import no.priv.bang.osgi.service.adapters.logservice.internal.ServiceReferenceAndLevelAndMessageAndException;
+import no.priv.bang.osgi.service.adapters.logservice.internal.SavedServiceReferenceAndLevelAndMessage;
+import no.priv.bang.osgi.service.adapters.logservice.internal.SavedServiceReferenceAndLevelAndMessageAndExceptn;
 
 /***
  * An adapter for {@link LogService}.  An instance of this class can be created
@@ -62,7 +62,7 @@ public class LogServiceAdapter implements LogService {
         if (logservice != null) {
             logservice.log(level, message);
         } else {
-            savedLogMessages.add(new LevelAndMessage(level, message));
+            savedLogMessages.add(new SavedLevelAndMessage(level, message));
         }
     }
 
@@ -76,7 +76,7 @@ public class LogServiceAdapter implements LogService {
         if (logservice != null) {
             logservice.log(level, message, exception);
         } else {
-            savedLogMessages.add(new LevelAndMessageAndException(level, message, exception));
+            savedLogMessages.add(new SavedLevelAndMessageAndExceptn(level, message, exception));
         }
     }
 
@@ -90,7 +90,7 @@ public class LogServiceAdapter implements LogService {
         if (logservice != null) {
             logservice.log(sr, level, message);
         } else {
-            savedLogMessages.add(new ServiceReferenceAndLevelAndMessage(sr, level, message));
+            savedLogMessages.add(new SavedServiceReferenceAndLevelAndMessage(sr, level, message));
         }
     }
 
@@ -104,7 +104,7 @@ public class LogServiceAdapter implements LogService {
         if (logservice != null) {
             logservice.log(sr, level, message, exception);
         } else {
-            savedLogMessages.add(new ServiceReferenceAndLevelAndMessageAndException(sr, level, message, exception));
+            savedLogMessages.add(new SavedServiceReferenceAndLevelAndMessageAndExceptn(sr, level, message, exception));
         }
     }
 

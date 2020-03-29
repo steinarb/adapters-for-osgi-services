@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017, 2020 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 
 @SuppressWarnings("rawtypes")
-public class ServiceReferenceAndLevelAndMessage extends LevelAndMessage {
+public class SavedServiceReferenceAndLevelAndMessage extends SavedLevelAndMessage {
 
     private ServiceReference servicereference;
 
-    public ServiceReferenceAndLevelAndMessage(ServiceReference sr, int level, String message) {
+    public SavedServiceReferenceAndLevelAndMessage(ServiceReference sr, int level, String message) {
         super(level, message);
         this.servicereference = sr;
     }

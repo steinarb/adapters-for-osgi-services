@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017, 2020 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@ package no.priv.bang.osgi.service.adapters.logservice.internal;
 
 import org.osgi.service.log.LogService;
 
-public class LevelAndMessageAndException extends LevelAndMessage {
+public class SavedLevelAndMessageAndExceptn extends SavedLevelAndMessage {
 
     protected Throwable exception;
 
-    public LevelAndMessageAndException(int level, String message, Throwable exception) {
+    public SavedLevelAndMessageAndExceptn(int level, String message, Throwable exception) {
         super(level, message);
         this.exception = exception;
     }
