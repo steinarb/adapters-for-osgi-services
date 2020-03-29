@@ -33,12 +33,14 @@
         <osgi.jdbc.version>1.0.0</osgi.jdbc.version>
         <pax.web.version>6.0.3</pax.web.version>
         <pax.jdbc.version>1.0.1</pax.jdbc.version>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <modules>
         <module>service-mocks</module>
         <module>logservice</module>
         <module>jdbc</module>
+        <module>jacoco-coverage-report</module>
     </modules>
 
     <dependencyManagement>
