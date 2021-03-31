@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017-2021 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package no.priv.bang.osgi.service.adapters.jdbc;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.Driver;
@@ -24,22 +24,22 @@ import java.sql.SQLException;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.XADataSource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.osgi.service.jdbc.DataSourceFactory;
 
 import no.priv.bang.osgi.service.adapters.jdbc.internal.NullDataSource;
 
-public class DataSourceFactoryAdapterTest {
+class DataSourceFactoryAdapterTest {
 
     @Test
-    public void testCreateDataSourceNoInjection() throws SQLException {
+    void testCreateDataSourceNoInjection() throws SQLException {
         DataSourceFactoryAdapter adapter = new DataSourceFactoryAdapter();
 
         assertEquals(NullDataSource.getInstance(), adapter.createDataSource(null));
     }
 
     @Test
-    public void testCreateDataSource() throws SQLException {
+    void testCreateDataSource() throws SQLException {
         DataSourceFactory factory = mock(DataSourceFactory.class);
 
         DataSourceFactoryAdapter adapter = new DataSourceFactoryAdapter();
@@ -49,14 +49,14 @@ public class DataSourceFactoryAdapterTest {
     }
 
     @Test
-    public void testCreateConnectionPoolDataSourceNoInjection() throws SQLException {
+    void testCreateConnectionPoolDataSourceNoInjection() throws SQLException {
         DataSourceFactoryAdapter adapter = new DataSourceFactoryAdapter();
 
         assertNull(adapter.createConnectionPoolDataSource(null));
     }
 
     @Test
-    public void testCreateConnectionPoolDataSource() throws SQLException {
+    void testCreateConnectionPoolDataSource() throws SQLException {
         DataSourceFactory factory = mock(DataSourceFactory.class);
         ConnectionPoolDataSource datasource = mock(ConnectionPoolDataSource.class);
         when(factory.createConnectionPoolDataSource(any())).thenReturn(datasource);
@@ -68,14 +68,14 @@ public class DataSourceFactoryAdapterTest {
     }
 
     @Test
-    public void testCreateXADataSourceNoInjection() throws SQLException {
+    void testCreateXADataSourceNoInjection() throws SQLException {
         DataSourceFactoryAdapter adapter = new DataSourceFactoryAdapter();
 
         assertNull(adapter.createXADataSource(null));
     }
 
     @Test
-    public void testCreateXADataSource() throws SQLException {
+    void testCreateXADataSource() throws SQLException {
         DataSourceFactory factory = mock(DataSourceFactory.class);
         XADataSource datasource = mock(XADataSource.class);
         when(factory.createXADataSource(any())).thenReturn(datasource);
@@ -87,14 +87,14 @@ public class DataSourceFactoryAdapterTest {
     }
 
     @Test
-    public void testCreateDriverNoInjection() throws SQLException {
+    void testCreateDriverNoInjection() throws SQLException {
         DataSourceFactoryAdapter adapter = new DataSourceFactoryAdapter();
 
         assertNull(adapter.createDriver(null));
     }
 
     @Test
-    public void testCreateDriver() throws SQLException {
+    void testCreateDriver() throws SQLException {
         DataSourceFactory factory = mock(DataSourceFactory.class);
         Driver driver = mock(Driver.class);
         when(factory.createDriver(any())).thenReturn(driver);

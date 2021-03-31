@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017-2021 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  */
 package no.priv.bang.osgi.service.adapters.logservice;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 @SuppressWarnings("rawtypes")
-public class LogServiceAdapterTest {
+class LogServiceAdapterTest {
 
     @Test
-    public void testSaveAndPassOnLogMessages() {
+    void testSaveAndPassOnLogMessages() {
         MockLogService logservice = new MockLogService();
         LogServiceAdapter adapter = new LogServiceAdapter();
 
@@ -70,7 +70,7 @@ public class LogServiceAdapterTest {
      * clear saved log messages
      */
     @Test
-    public void testNullLogServiceInjection() {
+    void testNullLogServiceInjection() {
         MockLogService logservice = new MockLogService();
         LogServiceAdapter adapter = new LogServiceAdapter();
 

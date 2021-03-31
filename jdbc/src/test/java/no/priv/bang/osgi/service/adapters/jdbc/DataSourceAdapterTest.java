@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017-2021 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package no.priv.bang.osgi.service.adapters.jdbc;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.PrintWriter;
@@ -23,21 +23,21 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import no.priv.bang.osgi.service.adapters.jdbc.internal.NullDataSource;
 
-public class DataSourceAdapterTest {
+class DataSourceAdapterTest {
 
-    @Before
-    public void before() throws SQLException {
+    @BeforeEach
+    void before() throws SQLException {
         NullDataSource.getInstance().setLoginTimeout(0);
         NullDataSource.getInstance().setLogWriter(null);
     }
 
     @Test
-    public void testThatAdapterInitiallyWrapsNullDataSource() throws SQLException {
+    void testThatAdapterInitiallyWrapsNullDataSource() throws SQLException {
         DataSourceAdapter adapter = new DataSourceAdapter();
         assertNull(adapter.getConnection());
         assertNull(adapter.getConnection("userdoesntmatter", "passwordoesntmatter"));
@@ -65,7 +65,7 @@ public class DataSourceAdapterTest {
     }
 
     @Test
-    public void testSetDatasource() throws SQLException {
+    void testSetDatasource() throws SQLException {
         DataSourceAdapter adapter = new DataSourceAdapter();
 
         // Set a new datasource into the adapter
