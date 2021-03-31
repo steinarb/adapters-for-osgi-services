@@ -36,8 +36,8 @@
 
     <modules>
         <module>service-mocks</module>
-        <module>logservice</module>
-        <module>jdbc</module>
+        <module>adapters.logservice</module>
+        <module>adapters.jdbc</module>
         <module>karaf</module>
         <module>jacoco-coverage-report</module>
     </modules>
@@ -129,9 +129,7 @@
                             <supportedProjectType>war</supportedProjectType>
                         </supportedProjectTypes>
                         <instructions>
-                            <Bundle-SymbolicName>${Bundle-SymbolicName}</Bundle-SymbolicName>
                             <Import-Package>*</Import-Package>
-                            <Export-Package>!*</Export-Package>
                             <_removeheaders>
                                 Private-Package,
                                 Include-Resource,

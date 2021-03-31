@@ -29,14 +29,14 @@
     <dependencies>
         <dependency>
             <groupId>no.priv.bang.osgi.service.adapters</groupId>
-            <artifactId>logservice</artifactId>
+            <artifactId>adapters.logservice</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
         <dependency>
             <groupId>no.priv.bang.osgi.service.adapters</groupId>
-            <artifactId>jdbc</artifactId>
+            <artifactId>adapters.jdbc</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
