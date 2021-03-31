@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017-2021 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@ package no.priv.bang.osgi.service.adapters.logservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
+import org.osgi.service.log.Logger;
 
 import no.priv.bang.osgi.service.adapters.logservice.internal.SavedLevelAndMessage;
 import no.priv.bang.osgi.service.adapters.logservice.internal.SavedLevelAndMessageAndExceptn;
@@ -129,6 +131,31 @@ public class LogServiceAdapter implements LogService {
 
             savedLogMessages.clear();
         }
+    }
+
+    @Override
+    public Logger getLogger(String name) {
+        return logservice.getLogger(name);
+    }
+
+    @Override
+    public Logger getLogger(Class<?> clazz) {
+        return logservice.getLogger(clazz);
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(String name, Class<L> loggerType) {
+        return logservice.getLogger(name, loggerType);
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(Class<?> clazz, Class<L> loggerType) {
+        return logservice.getLogger(clazz, loggerType);
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(Bundle bundle, String name, Class<L> loggerType) {
+        return logservice.getLogger(bundle, name, loggerType);
     }
 
 }

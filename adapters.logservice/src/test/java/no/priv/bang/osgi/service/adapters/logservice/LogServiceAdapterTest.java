@@ -19,8 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.log.FormatterLogger;
 import org.osgi.service.log.LogService;
+import org.osgi.service.log.Logger;
 
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
@@ -95,5 +98,63 @@ class LogServiceAdapterTest {
         assertEquals(4, logservice.getLogmessages().size());
     }
 
+    @Test
+    void testGetLoggerWithName() {
+        MockLogService logservice = new MockLogService();
+        LogServiceAdapter adapter = new LogServiceAdapter();
+        adapter.setLogService(logservice);
+        String name = "TestLogger";
+        Logger logger = adapter.getLogger(name);
+        assertEquals(name, logger.getName());
+        logger.info("Message {}", Integer.valueOf(123));
+        assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
+    }
+
+    @Test
+    void testGetLoggerWithClass() {
+        MockLogService logservice = new MockLogService();
+        LogServiceAdapter adapter = new LogServiceAdapter();
+        adapter.setLogService(logservice);
+        Logger logger = adapter.getLogger(LogServiceAdapterTest.class);
+        assertEquals(LogServiceAdapterTest.class.getName(), logger.getName());
+        logger.info("Message {}", Integer.valueOf(123));
+        assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
+    }
+
+    @Test
+    void testGetFormatterLoggerWithName() {
+        MockLogService logservice = new MockLogService();
+        LogServiceAdapter adapter = new LogServiceAdapter();
+        adapter.setLogService(logservice);
+        String name = "TestLogger";
+        FormatterLogger logger = adapter.getLogger(name, FormatterLogger.class);
+        assertEquals(name, logger.getName());
+        logger.info("Message %d", 123);
+        assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
+    }
+
+    @Test
+    void testGetFormatterLoggerWithBundleAndName() {
+        MockLogService logservice = new MockLogService();
+        LogServiceAdapter adapter = new LogServiceAdapter();
+        adapter.setLogService(logservice);
+        String name = "TestLogger";
+        Bundle bundle = mock(Bundle.class);
+        FormatterLogger logger = adapter.getLogger(bundle, name, FormatterLogger.class);
+        assertEquals(name, logger.getName());
+        logger.info("Message %d", 123);
+        assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
+    }
+
+    @Test
+    void testGetFormatterLoggerWithClass() {
+        MockLogService logservice = new MockLogService();
+        LogServiceAdapter adapter = new LogServiceAdapter();
+        adapter.setLogService(logservice);
+        FormatterLogger logger = adapter.getLogger(LogServiceAdapterTest.class, FormatterLogger.class);
+        assertEquals(LogServiceAdapterTest.class.getName(), logger.getName());
+        logger.info("Message %d", 123);
+        assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
+    }
 
 }

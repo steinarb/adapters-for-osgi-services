@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Steinar Bang
+ * Copyright 2017-2021 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,11 @@ package no.priv.bang.osgi.service.mocks.logservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.log.FormatterLogger;
 import org.osgi.service.log.LogService;
+import org.osgi.service.log.Logger;
 
 /**
  * This is an implementation of the {@link LogService} interface that is
@@ -40,6 +43,11 @@ import org.osgi.service.log.LogService;
 public class MockLogService implements LogService {
     final String[] errorLevel = {"", "[ERROR] ", "[WARNING] ", "[INFO] ", "[DEBUG] "};
     List<String> logmessages = new ArrayList<String>();
+    private boolean traceEnabled = true;
+    private boolean debugEnabled = true;
+    private boolean infoEnabled = true;
+    private boolean warnEnabled = true;
+    private boolean errorEnabled = true;
 
     /**
      * Get the list of formatted log messages that has been received by this
@@ -49,6 +57,51 @@ public class MockLogService implements LogService {
      */
     public List<String> getLogmessages() {
         return logmessages;
+    }
+
+    public boolean isTraceEnabled() {
+        return traceEnabled;
+    }
+
+    public MockLogService setTraceEnabled(boolean traceEnabled) {
+        this.traceEnabled = traceEnabled;
+        return this;
+    }
+
+    public boolean isDebugEnabled() {
+        return debugEnabled;
+    }
+
+    public MockLogService setDebugEnabled(boolean debugEnabled) {
+        this.debugEnabled = debugEnabled;
+        return this;
+    }
+
+    public boolean isInfoEnabled() {
+        return infoEnabled;
+    }
+
+    public MockLogService setInfoEnabled(boolean infoEnabled) {
+        this.infoEnabled  = infoEnabled;
+        return this;
+    }
+
+    public boolean isWarnEnabled() {
+        return warnEnabled;
+    }
+
+    public MockLogService setWarnEnabled(boolean warnEnabled) {
+        this.warnEnabled  = warnEnabled;
+        return this;
+    }
+
+    public boolean isErrorEnabled() {
+        return errorEnabled;
+    }
+
+    public MockLogService setErrorEnabled(boolean errorEnabled) {
+        this.errorEnabled = errorEnabled;
+        return this;
     }
 
     /**
@@ -109,6 +162,37 @@ public class MockLogService implements LogService {
         String messageWithLevel = errorLevel[level] + sr + " " + message + " " + exception.toString();
         logmessages.add(messageWithLevel);
         System.err.println(messageWithLevel);
+    }
+
+    @Override
+    public Logger getLogger(String name) {
+        return new MockLogger(name, this);
+    }
+
+    @Override
+    public Logger getLogger(Class<?> clazz) {
+        return new MockLogger(clazz.getCanonicalName(), this);
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(String name, Class<L> loggerType) {
+        if (loggerType.equals(FormatterLogger.class)) {
+            return loggerType.cast(new MockFormatterLogger(name, this));
+        } else if (loggerType.equals(Logger.class)) {
+            return loggerType.cast(new MockLogger(name, this));
+        }
+
+        return null;
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(Class<?> clazz, Class<L> loggerType) {
+        return getLogger(clazz.getCanonicalName(), loggerType);
+    }
+
+    @Override
+    public <L extends Logger> L getLogger(Bundle bundle, String name, Class<L> loggerType) {
+        return getLogger(name, loggerType);
     }
 
 }
