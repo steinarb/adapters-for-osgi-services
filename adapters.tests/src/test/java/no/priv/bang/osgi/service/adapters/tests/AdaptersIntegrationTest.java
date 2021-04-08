@@ -39,7 +39,7 @@ public class AdaptersIntegrationTest extends KarafTestSupport {
         final MavenArtifactUrlReference adaptersFeatureRepo = maven()
             .groupId("no.priv.bang.osgi.service.adapters")
             .artifactId("karaf")
-            .version("LATEST")
+            .versionAsInProject()
             .type("xml")
             .classifier("features");
         Option[] options = new Option[] {
