@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.priv.bang.osgi.service.adapters</groupId>
     <artifactId>adapters</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.1.0</version>
 
     <packaging>pom</packaging>
 
@@ -301,7 +301,7 @@
     <scm>
         <url>https://github.com/steinarb/adapters-for-osgi-services.git</url>
         <connection>scm:git:https://github.com/steinarb/adapters-for-osgi-services.git</connection>
-        <tag>HEAD</tag>
+        <tag>adapters-1.1.0</tag>
     </scm>
 
     <distributionManagement>
