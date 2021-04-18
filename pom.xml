@@ -40,6 +40,7 @@
         <module>karaf</module>
         <module>adapters.tests</module>
         <module>jacoco-coverage-report</module>
+        <module>adapters-bom</module>
     </modules>
 
     <dependencyManagement>
