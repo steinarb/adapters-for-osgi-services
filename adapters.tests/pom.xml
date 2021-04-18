@@ -27,12 +27,6 @@
     <dependencies>
         <dependency>
             <groupId>no.priv.bang.osgi.service.adapters</groupId>
-            <artifactId>karaf</artifactId>
-            <version>${project.version}</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.osgi.service.adapters</groupId>
             <artifactId>adapters.jdbc</artifactId>
             <version>${project.version}</version>
         </dependency>

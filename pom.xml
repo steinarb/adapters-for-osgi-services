@@ -37,7 +37,6 @@
         <module>service-mocks</module>
         <module>adapters.logservice</module>
         <module>adapters.jdbc</module>
-        <module>karaf</module>
         <module>adapters.tests</module>
         <module>jacoco-coverage-report</module>
         <module>adapters-bom</module>
