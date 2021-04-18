@@ -26,7 +26,7 @@ Add the following to the <dependencies> section of the POM of your OSGi bundle p
   <dependency>
       <groupId>no.priv.bang.osgi.service.adapters</groupId>
       <artifactId>logservice</artifactId>
-      <version>1.1.1</version>
+      <version>1.1.2</version>
       <scope>provided</scope>
   </dependencyS
 #+END_SRC
@@ -37,7 +37,7 @@ In the karaf feature template file for your bundle project, i.e. src/main/featur
 #+BEGIN_SRC xml
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <features>
-      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.1.1/xml/features</repository>
+      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.1.2/xml/features</repository>
       <feature name="${karaf-feature-name}">
           <feature>adapter-for-osgi-logservice</feature>
       </feature>
@@ -84,7 +84,7 @@ Add the following to the <dependencies> section of the POM of your OSGi bundle p
   <dependency>
       <groupId>no.priv.bang.osgi.service.adapters</groupId>
       <artifactId>jdbc</artifactId>
-      <version>1.1.1</version>
+      <version>1.1.2</version>
       <scope>provided</scope>
   </dependencyS
 #+END_SRC
@@ -96,7 +96,7 @@ In the karaf feature template file for your bundle project, i.e. src/main/featur
 #+BEGIN_SRC xml
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <features>
-      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.1.1/xml/features</repository>
+      <repository>mvn:no.priv.bang.osgi.service.adapters/service-adapters-karaf/1.1.2/xml/features</repository>
       <feature name="${karaf-feature-name}">
           <feature>adapters-for-osgi-jdbc-services</feature>
       </feature>
@@ -194,7 +194,7 @@ Add the following to the POM of the project(s) that wants to use these classes:
   <dependency>
       <groupId>no.priv.bang.osgi.service.adapters</groupId>
       <artifactId>service-mocks</artifactId>
-      <version>1.1.1</version>
+      <version>1.1.2</version>
       <scope>test</scope>
   </dependency>
 #+END_SRC
@@ -219,6 +219,11 @@ Code example:
   }
 #+END_SRC
 ** Release history
+*** Version 1.1.2
+
+Changes:
+ - Provide a Bill of Materials (BoM)
+
 *** Version 1.1.1
 
 Changes:
