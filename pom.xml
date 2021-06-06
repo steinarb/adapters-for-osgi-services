@@ -29,10 +29,6 @@
     <description>Java OSGi library bundles containing classes implementing OSGi service interfaces and intended for wrapping injected OSGi services. The idea is to avoid clutter from guarding against NullPointerReference exceptions in the code using the injected services.</description>
     <url>https://github.com/steinarb/adapters-for-osgi-services</url>
 
-    <properties>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    </properties>
-
     <modules>
         <module>service-mocks</module>
         <module>adapters.logservice</module>
@@ -41,6 +37,10 @@
         <module>jacoco-coverage-report</module>
         <module>adapters-bom</module>
     </modules>
+
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
