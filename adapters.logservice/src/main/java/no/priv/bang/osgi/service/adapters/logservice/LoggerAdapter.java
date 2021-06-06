@@ -68,8 +68,7 @@ public class LoggerAdapter implements Logger {
 
     @Override
     public <E extends Exception> void trace(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
-
+        getLogger().trace(consumer);
     }
 
     @Override
@@ -99,8 +98,7 @@ public class LoggerAdapter implements Logger {
 
     @Override
     public <E extends Exception> void debug(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
-
+        getLogger().debug(consumer);
     }
 
     @Override
@@ -130,8 +128,7 @@ public class LoggerAdapter implements Logger {
 
     @Override
     public <E extends Exception> void info(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
-
+        getLogger().info(consumer);
     }
 
     @Override
@@ -161,8 +158,7 @@ public class LoggerAdapter implements Logger {
 
     @Override
     public <E extends Exception> void warn(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
-
+        getLogger().warn(consumer);
     }
 
     @Override
@@ -192,8 +188,7 @@ public class LoggerAdapter implements Logger {
 
     @Override
     public <E extends Exception> void error(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
-
+        getLogger().error(consumer);
     }
 
     @Override

@@ -17,8 +17,15 @@ package no.priv.bang.osgi.service.adapters.logservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.osgi.service.log.LogService;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerConsumer;
+
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class LoggerAdapterTest {
@@ -64,6 +71,19 @@ class LoggerAdapterTest {
     }
 
     @Test
+    void testTraceConsumer() throws Exception {
+        LogService logservice = mock(LogService.class);
+        Logger logger = mock(Logger.class);
+        when(logservice.getLogger(any(Class.class))).thenReturn(logger);
+        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        adapter.setLogService(logservice);
+
+        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        adapter.trace(consumer);
+        verify(logger).trace(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
     void testDebugOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
@@ -101,6 +121,19 @@ class LoggerAdapterTest {
         adapter.debug("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         int logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+    }
+
+    @Test
+    void testDebugConsumer() throws Exception {
+        LogService logservice = mock(LogService.class);
+        Logger logger = mock(Logger.class);
+        when(logservice.getLogger(any(Class.class))).thenReturn(logger);
+        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        adapter.setLogService(logservice);
+
+        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        adapter.debug(consumer);
+        verify(logger).debug(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
@@ -144,6 +177,19 @@ class LoggerAdapterTest {
     }
 
     @Test
+    void testInfoConsumer() throws Exception {
+        LogService logservice = mock(LogService.class);
+        Logger logger = mock(Logger.class);
+        when(logservice.getLogger(any(Class.class))).thenReturn(logger);
+        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        adapter.setLogService(logservice);
+
+        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        adapter.info(consumer);
+        verify(logger).info(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
     void testWarningOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
@@ -181,6 +227,19 @@ class LoggerAdapterTest {
         adapter.warn("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         int logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+    }
+
+    @Test
+    void testWarningConsumer() throws Exception {
+        LogService logservice = mock(LogService.class);
+        Logger logger = mock(Logger.class);
+        when(logservice.getLogger(any(Class.class))).thenReturn(logger);
+        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        adapter.setLogService(logservice);
+
+        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        adapter.warn(consumer);
+        verify(logger).warn(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
@@ -224,6 +283,19 @@ class LoggerAdapterTest {
     }
 
     @Test
+    void testErrorConsumer() throws Exception {
+        LogService logservice = mock(LogService.class);
+        Logger logger = mock(Logger.class);
+        when(logservice.getLogger(any(Class.class))).thenReturn(logger);
+        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        adapter.setLogService(logservice);
+
+        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        adapter.error(consumer);
+        verify(logger).error(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
     void testAuditOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
@@ -246,6 +318,18 @@ class LoggerAdapterTest {
         int logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[ERROR] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
+    }
+
+    private LoggerConsumer<Exception> createMockLoggerConsumer() {
+        LoggerConsumer<Exception> consumer = new LoggerConsumer<Exception>() {
+
+                @Override
+                public void accept(Logger l) throws Exception {
+                    // TODO Auto-generated method stub
+
+                }
+            };
+        return consumer;
     }
 
 }
