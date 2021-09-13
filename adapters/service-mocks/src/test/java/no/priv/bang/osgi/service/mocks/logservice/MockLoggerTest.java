@@ -63,6 +63,18 @@ class MockLoggerTest {
     }
 
     @Test
+    void testTraceWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.trace("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
+    }
+
+    @Test
     void testDebugOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         String name = "TestLogger";
@@ -100,6 +112,18 @@ class MockLoggerTest {
         logger.debug("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         int logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+    }
+
+    @Test
+    void testDebugWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.debug("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
     }
 
     @Test
@@ -143,6 +167,18 @@ class MockLoggerTest {
     }
 
     @Test
+    void testInfoWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.info("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
+    }
+
+    @Test
     void testWarningOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         String name = "TestLogger";
@@ -180,6 +216,18 @@ class MockLoggerTest {
         logger.warn("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         int logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+    }
+
+    @Test
+    void testWarningWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.warn("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
     }
 
     @Test
@@ -223,6 +271,18 @@ class MockLoggerTest {
     }
 
     @Test
+    void testErrorWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.error("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
+    }
+
+    @Test
     void testAuditOnLoggerWithName() {
         MockLogService mockLogService = new MockLogService();
         String name = "TestLogger";
@@ -245,6 +305,18 @@ class MockLoggerTest {
         int logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[ERROR] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
+    }
+
+    @Test
+    void testAuditWithThrowable() {
+        MockLogService mockLogService = new MockLogService();
+        String name = "TestLogger";
+        Logger logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.audit("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
     }
 
     @Test

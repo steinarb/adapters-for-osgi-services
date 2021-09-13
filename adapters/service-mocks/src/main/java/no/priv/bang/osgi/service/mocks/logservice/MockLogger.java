@@ -18,6 +18,7 @@ package no.priv.bang.osgi.service.mocks.logservice;
 import org.osgi.service.log.LogService;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerConsumer;
+import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
 public class MockLogger implements Logger {
@@ -50,21 +51,21 @@ public class MockLogger implements Logger {
     @Override
     public void trace(String format, Object arg) {
         if (isTraceEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.format(format, arg).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.format(format, arg)));
         }
     }
 
     @Override
     public void trace(String format, Object arg1, Object arg2) {
         if (isTraceEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.format(format, arg1, arg2).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
         }
     }
 
     @Override
     public void trace(String format, Object... arguments) {
         if (isTraceEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.arrayFormat(format, arguments).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
         }
     }
 
@@ -89,21 +90,21 @@ public class MockLogger implements Logger {
     @Override
     public void debug(String format, Object arg) {
         if (isDebugEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.format(format, arg).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.format(format, arg)));
         }
     }
 
     @Override
     public void debug(String format, Object arg1, Object arg2) {
         if (isDebugEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.format(format, arg1, arg2).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
         }
     }
 
     @Override
     public void debug(String format, Object... arguments) {
         if (isDebugEnabled()) {
-            mockLogService.log(LogService.LOG_DEBUG, MessageFormatter.arrayFormat(format, arguments).getMessage());
+            mockLogService.log(LogService.LOG_DEBUG, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
         }
     }
 
@@ -128,21 +129,21 @@ public class MockLogger implements Logger {
     @Override
     public void info(String format, Object arg) {
         if (isInfoEnabled()) {
-            mockLogService.log(LogService.LOG_INFO, MessageFormatter.format(format, arg).getMessage());
+            mockLogService.log(LogService.LOG_INFO, messageAndThrowable(MessageFormatter.format(format, arg)));
         }
     }
 
     @Override
     public void info(String format, Object arg1, Object arg2) {
         if (isInfoEnabled()) {
-            mockLogService.log(LogService.LOG_INFO, MessageFormatter.format(format, arg1, arg2).getMessage());
+            mockLogService.log(LogService.LOG_INFO, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
         }
     }
 
     @Override
     public void info(String format, Object... arguments) {
         if (isInfoEnabled()) {
-            mockLogService.log(LogService.LOG_INFO, MessageFormatter.arrayFormat(format, arguments).getMessage());
+            mockLogService.log(LogService.LOG_INFO, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
         }
     }
 
@@ -167,22 +168,21 @@ public class MockLogger implements Logger {
     @Override
     public void warn(String format, Object arg) {
         if (isWarnEnabled()) {
-            mockLogService.log(LogService.LOG_WARNING, MessageFormatter.format(format, arg).getMessage());
+            mockLogService.log(LogService.LOG_WARNING, messageAndThrowable(MessageFormatter.format(format, arg)));
         }
     }
 
     @Override
     public void warn(String format, Object arg1, Object arg2) {
         if (isWarnEnabled()) {
-            mockLogService.log(LogService.LOG_WARNING, MessageFormatter.format(format, arg1, arg2).getMessage());
+            mockLogService.log(LogService.LOG_WARNING, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
         }
     }
 
     @Override
     public void warn(String format, Object... arguments) {
         if (isWarnEnabled()) {
-            mockLogService.log(LogService.LOG_WARNING,
-                               MessageFormatter.arrayFormat(format, arguments).getMessage());
+            mockLogService.log(LogService.LOG_WARNING, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
         }
     }
 
@@ -207,21 +207,21 @@ public class MockLogger implements Logger {
     @Override
     public void error(String format, Object arg) {
         if (isErrorEnabled()) {
-            mockLogService.log(LogService.LOG_ERROR, MessageFormatter.format(format, arg).getMessage());
+            mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg)));
         }
     }
 
     @Override
     public void error(String format, Object arg1, Object arg2) {
         if (isErrorEnabled()) {
-            mockLogService.log(LogService.LOG_ERROR, MessageFormatter.format(format, arg1, arg2).getMessage());
+            mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
         }
     }
 
     @Override
     public void error(String format, Object... arguments) {
         if (isErrorEnabled()) {
-            mockLogService.log(LogService.LOG_ERROR, MessageFormatter.arrayFormat(format, arguments).getMessage());
+            mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
         }
     }
 
@@ -238,17 +238,23 @@ public class MockLogger implements Logger {
 
     @Override
     public void audit(String format, Object arg) {
-        mockLogService.log(LogService.LOG_ERROR, MessageFormatter.format(format, arg).getMessage());
+        mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg)));
     }
 
     @Override
     public void audit(String format, Object arg1, Object arg2) {
-        mockLogService.log(LogService.LOG_ERROR, MessageFormatter.format(format, arg1, arg2).getMessage());
+        mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
     }
 
     @Override
     public void audit(String format, Object... arguments) {
-        mockLogService.log(LogService.LOG_ERROR, MessageFormatter.arrayFormat(format, arguments).getMessage());
+        mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
+    }
+
+    private String messageAndThrowable(FormattingTuple format) {
+        return format.getThrowable() != null ?
+            format.getMessage() + " " + format.getThrowable() :
+            format.getMessage();
     }
 
 }
