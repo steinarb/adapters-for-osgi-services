@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Steinar Bang
+ * Copyright 2021-2022 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,14 +36,21 @@ public class AdaptersIntegrationTest extends KarafTestSupport {
 
     @Configuration
     public Option[] config() {
-        final MavenArtifactUrlReference adaptersFeatureRepo = maven()
-            .groupId("no.priv.bang.osgi.service.adapters")
-            .artifactId("karaf")
-            .version("LATEST")
-            .type("xml")
-            .classifier("features");
+        final MavenArtifactUrlReference logserviceAdapterFeatureRepo = maven()
+                .groupId("no.priv.bang.osgi.service.adapters")
+                .artifactId("adapters.logservice")
+                .version("LATEST")
+                .type("xml")
+                .classifier("features");
+        final MavenArtifactUrlReference jdbcAdapterFeatureRepo = maven()
+                .groupId("no.priv.bang.osgi.service.adapters")
+                .artifactId("adapters.jdbc")
+                .version("LATEST")
+                .type("xml")
+                .classifier("features");
         Option[] options = new Option[] {
-            features(adaptersFeatureRepo)
+                features(logserviceAdapterFeatureRepo),
+                features(jdbcAdapterFeatureRepo)
         };
         return Stream.of(super.config(), options).flatMap(Stream::of).toArray(Option[]::new);
     }
