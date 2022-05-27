@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2017-2021 Steinar Bang                                                -->
+<!-- Copyright 2017-2022 Steinar Bang                                                -->
 <!--                                                                                 -->
 <!-- Licensed under the Apache License, Version 2.0 (the "License");                 -->
 <!-- you may not use this file except in compliance with the License.                -->
@@ -17,11 +17,12 @@
     <parent>
         <groupId>no.priv.bang.pom</groupId>
         <artifactId>bang-pom</artifactId>
-        <version>1.0.21</version>
+        <version>1.1.0</version>
     </parent>
     <groupId>no.priv.bang.osgi.service.adapters</groupId>
     <artifactId>adapters-parent</artifactId>
     <version>1.2.0-SNAPSHOT</version>
+    <!-- Note: remember to manually update property service-adapters.version of servlet when doing a new release, since that doesn't inherit bang-app-pom -->
 
     <packaging>pom</packaging>
 
