@@ -21,7 +21,7 @@
     </parent>
     <groupId>no.priv.bang.osgi.service.adapters</groupId>
     <artifactId>adapters-parent</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0-SNAPSHOT</version>
     <!-- Note: remember to manually update property service-adapters.version of servlet when doing a new release, since that doesn't inherit bang-app-pom -->
 
     <packaging>pom</packaging>
@@ -147,7 +147,7 @@
     <scm>
         <url>https://github.com/steinarb/adapters-for-osgi-services.git</url>
         <connection>scm:git:https://github.com/steinarb/adapters-for-osgi-services.git</connection>
-        <tag>adapters-1.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
