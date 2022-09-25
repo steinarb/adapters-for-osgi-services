@@ -8,11 +8,25 @@ At that point you will either have to resolve a SonarQube bug as a false positiv
 
 ** Status
 
-[[https://travis-ci.org/steinarb/adapters-for-osgi-services][file:https://travis-ci.org/steinarb/adapters-for-osgi-services.svg?branch=master]] [[https://coveralls.io/r/steinarb/adapters-for-osgi-services][file:https://coveralls.io/repos/steinarb/adapters-for-osgi-services/badge.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=alert_status#.svg]] [[https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters][file:https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters/badge.svg]] [[https://www.javadoc.io/doc/no.priv.bang.osgi.service.adapters/adapters][file:https://www.javadoc.io/badge/no.priv.bang.osgi.service.adapters/adapters.svg]]
+[[https://github.com/steinarb/adapters-for-osgi-services/actions/workflows/adapters-for-osgi-services-maven-ci-build.yml][file:https://github.com/steinarb/adapters-for-osgi-services/actions/workflows/adapters-for-osgi-services-maven-ci-build.yml/badge.svg]]
+[[https://coveralls.io/github/steinarb/adapters-for-osgi-services][file:https://coveralls.io/repos/github/steinarb/adapters-for-osgi-services/badge.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=alert_status#.svg]]
+[[https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters][file:https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters/badge.svg]]
+[[https://www.javadoc.io/doc/no.priv.bang.osgi.service.adapters/adapters][file:https://www.javadoc.io/badge/no.priv.bang.osgi.service.adapters/adapters.svg]]
 
-*** SonarCloud
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/images/project_badges/sonarcloud-white.svg]]
 
-[[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=ncloc#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service.adapters%3Aadapters][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service.adapters%3Aadapters&metric=coverage#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=sqale_index#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=coverage#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=ncloc#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=code_smells#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=sqale_rating#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=security_rating#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=bugs#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=vulnerabilities#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=duplicated_lines_density#.svg]]
+[[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=reliability_rating#.svg]]
+
 ** List of Adapters
 
 *** OSGi Log Service Adapter
