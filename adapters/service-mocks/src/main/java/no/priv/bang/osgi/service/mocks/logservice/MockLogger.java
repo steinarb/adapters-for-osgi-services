@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Steinar Bang
+ * Copyright 2021-2023 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void trace(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
+        /* Empty implementation */
 
     }
 
@@ -110,7 +110,7 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void debug(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
+        /* Empty implementation */
 
     }
 
@@ -149,7 +149,7 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void info(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
+        /* Empty implementation */
 
     }
 
@@ -188,7 +188,7 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void warn(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
+        /* Empty implementation */
 
     }
 
@@ -227,7 +227,7 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void error(LoggerConsumer<E> consumer) throws E {
-        // TODO Auto-generated method stub
+        /* Empty implementation */
 
     }
 

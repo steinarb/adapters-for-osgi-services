@@ -325,8 +325,7 @@ class LoggerAdapterTest {
 
                 @Override
                 public void accept(Logger l) throws Exception {
-                    // TODO Auto-generated method stub
-
+                    /* Do nothing */
                 }
             };
         return consumer;
