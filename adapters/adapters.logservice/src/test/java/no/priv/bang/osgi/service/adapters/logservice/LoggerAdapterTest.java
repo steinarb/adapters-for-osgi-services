@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Steinar Bang
+ * Copyright 2021-2024 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,302 +32,302 @@ class LoggerAdapterTest {
 
     @Test
     void testTraceOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertTrue(adapter.isTraceEnabled());
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.trace(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[DEBUG] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.trace("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[DEBUG] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.trace("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[DEBUG] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.trace("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[DEBUG] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
         mockLogService.setTraceEnabled(false);
         assertFalse(adapter.isTraceEnabled());
         adapter.trace("Message 5");
-        int logCount5 = mockLogService.getLogmessages().size();
+        var logCount5 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount5);
         adapter.trace("Message 6 {}", Integer.valueOf(123));
-        int logCount6 = mockLogService.getLogmessages().size();
+        var logCount6 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount6);
         adapter.trace("Message 7 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount7 = mockLogService.getLogmessages().size();
+        var logCount7 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount7);
         adapter.trace("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount8 = mockLogService.getLogmessages().size();
+        var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
     }
 
     @Test
     void testTraceConsumer() throws Exception {
-        LogService logservice = mock(LogService.class);
-        Logger logger = mock(Logger.class);
+        var logservice = mock(LogService.class);
+        var logger = mock(Logger.class);
         when(logservice.getLogger(any(Class.class))).thenReturn(logger);
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(logservice);
 
-        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        var consumer = createMockLoggerConsumer();
         adapter.trace(consumer);
         verify(logger).trace(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
     void testDebugOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertTrue(adapter.isDebugEnabled());
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.debug(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[DEBUG] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.debug("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[DEBUG] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.debug("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[DEBUG] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.debug("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[DEBUG] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
         mockLogService.setDebugEnabled(false);
         assertFalse(adapter.isDebugEnabled());
         adapter.debug("Message 5");
-        int logCount5 = mockLogService.getLogmessages().size();
+        var logCount5 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount5);
         adapter.debug("Message 6 {}", Integer.valueOf(123));
-        int logCount6 = mockLogService.getLogmessages().size();
+        var logCount6 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount6);
         adapter.debug("Message 7 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount7 = mockLogService.getLogmessages().size();
+        var logCount7 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount7);
         adapter.debug("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount8 = mockLogService.getLogmessages().size();
+        var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
     }
 
     @Test
     void testDebugConsumer() throws Exception {
-        LogService logservice = mock(LogService.class);
-        Logger logger = mock(Logger.class);
+        var logservice = mock(LogService.class);
+        var logger = mock(Logger.class);
         when(logservice.getLogger(any(Class.class))).thenReturn(logger);
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(logservice);
 
-        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        var consumer = createMockLoggerConsumer();
         adapter.debug(consumer);
         verify(logger).debug(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
     void testInfoOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertTrue(adapter.isInfoEnabled());
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.info(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[INFO] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.info("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[INFO] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.info("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[INFO] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.info("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[INFO] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
         mockLogService.setInfoEnabled(false);
         assertFalse(adapter.isInfoEnabled());
         adapter.info("Message 5");
-        int logCount5 = mockLogService.getLogmessages().size();
+        var logCount5 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount5);
         adapter.info("Message 6 {}", Integer.valueOf(123));
-        int logCount6 = mockLogService.getLogmessages().size();
+        var logCount6 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount6);
         adapter.info("Message 7 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount7 = mockLogService.getLogmessages().size();
+        var logCount7 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount7);
         adapter.info("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount8 = mockLogService.getLogmessages().size();
+        var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
     }
 
     @Test
     void testInfoConsumer() throws Exception {
-        LogService logservice = mock(LogService.class);
-        Logger logger = mock(Logger.class);
+        var logservice = mock(LogService.class);
+        var logger = mock(Logger.class);
         when(logservice.getLogger(any(Class.class))).thenReturn(logger);
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(logservice);
 
-        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        var consumer = createMockLoggerConsumer();
         adapter.info(consumer);
         verify(logger).info(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
     void testWarningOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertTrue(adapter.isWarnEnabled());
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.warn(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[WARNING] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.warn("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[WARNING] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.warn("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[WARNING] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.warn("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[WARNING] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
         mockLogService.setWarnEnabled(false);
         assertFalse(adapter.isWarnEnabled());
         adapter.warn("Message 5");
-        int logCount5 = mockLogService.getLogmessages().size();
+        var logCount5 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount5);
         adapter.warn("Message 6 {}", Integer.valueOf(123));
-        int logCount6 = mockLogService.getLogmessages().size();
+        var logCount6 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount6);
         adapter.warn("Message 7 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount7 = mockLogService.getLogmessages().size();
+        var logCount7 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount7);
         adapter.warn("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount8 = mockLogService.getLogmessages().size();
+        var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
     }
 
     @Test
     void testWarningConsumer() throws Exception {
-        LogService logservice = mock(LogService.class);
-        Logger logger = mock(Logger.class);
+        var logservice = mock(LogService.class);
+        var logger = mock(Logger.class);
         when(logservice.getLogger(any(Class.class))).thenReturn(logger);
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(logservice);
 
-        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        var consumer = createMockLoggerConsumer();
         adapter.warn(consumer);
         verify(logger).warn(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
     void testErrorOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertTrue(adapter.isErrorEnabled());
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.error(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[ERROR] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.error("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[ERROR] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.error("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[ERROR] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.error("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[ERROR] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
         mockLogService.setErrorEnabled(false);
         assertFalse(adapter.isErrorEnabled());
         adapter.error("Message 5");
-        int logCount5 = mockLogService.getLogmessages().size();
+        var logCount5 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount5);
         adapter.error("Message 6 {}", Integer.valueOf(123));
-        int logCount6 = mockLogService.getLogmessages().size();
+        var logCount6 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount6);
         adapter.error("Message 7 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount7 = mockLogService.getLogmessages().size();
+        var logCount7 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount7);
         adapter.error("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount8 = mockLogService.getLogmessages().size();
+        var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
     }
 
     @Test
     void testErrorConsumer() throws Exception {
-        LogService logservice = mock(LogService.class);
-        Logger logger = mock(Logger.class);
+        var logservice = mock(LogService.class);
+        var logger = mock(Logger.class);
         when(logservice.getLogger(any(Class.class))).thenReturn(logger);
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(logservice);
 
-        LoggerConsumer<Exception> consumer = createMockLoggerConsumer();
+        var consumer = createMockLoggerConsumer();
         adapter.error(consumer);
         verify(logger).error(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
     }
 
     @Test
     void testAuditOnLoggerWithName() {
-        MockLogService mockLogService = new MockLogService();
-        LoggerAdapter adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        var mockLogService = new MockLogService();
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
         adapter.setLogService(mockLogService);
         assertEquals(LoggerAdapterTest.class.getCanonicalName(), adapter.getName());
-        String message1 = "Message 1";
+        var message1 = "Message 1";
         adapter.audit(message1);
-        int logCount1 = mockLogService.getLogmessages().size();
+        var logCount1 = mockLogService.getLogmessages().size();
         assertThat(logCount1).isPositive();
         assertEquals("[ERROR] " + message1, mockLogService.getLogmessages().get(logCount1 - 1));
         adapter.audit("Message 2 {}", Integer.valueOf(123));
-        int logCount2 = mockLogService.getLogmessages().size();
+        var logCount2 = mockLogService.getLogmessages().size();
         assertThat(logCount2).isGreaterThan(logCount1);
         assertEquals("[ERROR] Message 2 123", mockLogService.getLogmessages().get(logCount2 - 1));
         adapter.audit("Message 3 {} {}", Integer.valueOf(123), Integer.valueOf(456));
-        int logCount3 = mockLogService.getLogmessages().size();
+        var logCount3 = mockLogService.getLogmessages().size();
         assertThat(logCount3).isGreaterThan(logCount2);
         assertEquals("[ERROR] Message 3 123 456", mockLogService.getLogmessages().get(logCount3 - 1));
         adapter.audit("Message 4 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
-        int logCount4 = mockLogService.getLogmessages().size();
+        var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[ERROR] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
     }
 
     private LoggerConsumer<Exception> createMockLoggerConsumer() {
-        LoggerConsumer<Exception> consumer = new LoggerConsumer<Exception>() {
+        var consumer = new LoggerConsumer<Exception>() {
 
-                @Override
-                public void accept(Logger l) throws Exception {
-                    /* Do nothing */
-                }
-            };
+            @Override
+            public void accept(Logger l) throws Exception {
+                /* Do nothing */
+            }
+        };
         return consumer;
     }
 

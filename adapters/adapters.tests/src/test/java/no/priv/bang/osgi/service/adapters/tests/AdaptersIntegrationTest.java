@@ -26,7 +26,6 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
-import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 
@@ -36,21 +35,21 @@ public class AdaptersIntegrationTest extends KarafTestSupport {
 
     @Configuration
     public Option[] config() {
-        final MavenArtifactUrlReference logserviceAdapterFeatureRepo = maven()
-                .groupId("no.priv.bang.osgi.service.adapters")
-                .artifactId("adapters.logservice")
-                .version("LATEST")
-                .type("xml")
-                .classifier("features");
-        final MavenArtifactUrlReference jdbcAdapterFeatureRepo = maven()
-                .groupId("no.priv.bang.osgi.service.adapters")
-                .artifactId("adapters.jdbc")
-                .version("LATEST")
-                .type("xml")
-                .classifier("features");
-        Option[] options = new Option[] {
-                features(logserviceAdapterFeatureRepo),
-                features(jdbcAdapterFeatureRepo)
+        final var logserviceAdapterFeatureRepo = maven()
+            .groupId("no.priv.bang.osgi.service.adapters")
+            .artifactId("adapters.logservice")
+            .version("LATEST")
+            .type("xml")
+            .classifier("features");
+        final var jdbcAdapterFeatureRepo = maven()
+            .groupId("no.priv.bang.osgi.service.adapters")
+            .artifactId("adapters.jdbc")
+            .version("LATEST")
+            .type("xml")
+            .classifier("features");
+        var options = new Option[] {
+            features(logserviceAdapterFeatureRepo),
+            features(jdbcAdapterFeatureRepo)
         };
         return Stream.of(super.config(), options).flatMap(Stream::of).toArray(Option[]::new);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 Steinar Bang
+ * Copyright 2017-2024 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,13 +32,13 @@ class LogServiceAdapterTest {
 
     @Test
     void testSaveAndPassOnLogMessages() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
 
         // Log some messages that should be logged
         adapter.log(LogService.LOG_DEBUG, "This is a debug message");
         adapter.log(LogService.LOG_INFO, "This is an info message", new IllegalStateException());
-        ServiceReference service = mock(ServiceReference.class);
+        var service = mock(ServiceReference.class);
         when(service.toString()).thenReturn("<service>");
         adapter.log(service, LogService.LOG_WARNING, "This is a warning message");
         adapter.log(service, LogService.LOG_ERROR, "This is an error message", new IllegalArgumentException("a"));
@@ -54,7 +54,7 @@ class LogServiceAdapterTest {
 
         // Verify that if setting a new logservice, there will be no new log messages
         // (ie. saved messages were cleared, when the first logservice was set)
-        MockLogService newLogservice = new MockLogService();
+        var newLogservice = new MockLogService();
         adapter.setLogService(newLogservice);
         assertEquals(0, newLogservice.getLogmessages().size());
 
@@ -74,13 +74,13 @@ class LogServiceAdapterTest {
      */
     @Test
     void testNullLogServiceInjection() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
 
         // Log some messages that should be logged
         adapter.log(LogService.LOG_DEBUG, "This is a debug message");
         adapter.log(LogService.LOG_INFO, "This is an info message", new IllegalStateException());
-        ServiceReference service = mock(ServiceReference.class);
+        var service = mock(ServiceReference.class);
         when(service.toString()).thenReturn("<service>");
         adapter.log(service, LogService.LOG_WARNING, "This is a warning message");
         adapter.log(service, LogService.LOG_ERROR, "This is an error message", new IllegalArgumentException("a"));
@@ -100,11 +100,11 @@ class LogServiceAdapterTest {
 
     @Test
     void testGetLoggerWithName() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
         adapter.setLogService(logservice);
-        String name = "TestLogger";
-        Logger logger = adapter.getLogger(name);
+        var name = "TestLogger";
+        var logger = adapter.getLogger(name);
         assertEquals(name, logger.getName());
         logger.info("Message {}", Integer.valueOf(123));
         assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
@@ -112,10 +112,10 @@ class LogServiceAdapterTest {
 
     @Test
     void testGetLoggerWithClass() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
         adapter.setLogService(logservice);
-        Logger logger = adapter.getLogger(LogServiceAdapterTest.class);
+        var logger = adapter.getLogger(LogServiceAdapterTest.class);
         assertEquals(LogServiceAdapterTest.class.getName(), logger.getName());
         logger.info("Message {}", Integer.valueOf(123));
         assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
@@ -123,11 +123,11 @@ class LogServiceAdapterTest {
 
     @Test
     void testGetFormatterLoggerWithName() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
         adapter.setLogService(logservice);
-        String name = "TestLogger";
-        FormatterLogger logger = adapter.getLogger(name, FormatterLogger.class);
+        var name = "TestLogger";
+        var logger = adapter.getLogger(name, FormatterLogger.class);
         assertEquals(name, logger.getName());
         logger.info("Message %d", 123);
         assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
@@ -135,12 +135,12 @@ class LogServiceAdapterTest {
 
     @Test
     void testGetFormatterLoggerWithBundleAndName() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
         adapter.setLogService(logservice);
-        String name = "TestLogger";
-        Bundle bundle = mock(Bundle.class);
-        FormatterLogger logger = adapter.getLogger(bundle, name, FormatterLogger.class);
+        var name = "TestLogger";
+        var bundle = mock(Bundle.class);
+        var logger = adapter.getLogger(bundle, name, FormatterLogger.class);
         assertEquals(name, logger.getName());
         logger.info("Message %d", 123);
         assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
@@ -148,10 +148,10 @@ class LogServiceAdapterTest {
 
     @Test
     void testGetFormatterLoggerWithClass() {
-        MockLogService logservice = new MockLogService();
-        LogServiceAdapter adapter = new LogServiceAdapter();
+        var logservice = new MockLogService();
+        var adapter = new LogServiceAdapter();
         adapter.setLogService(logservice);
-        FormatterLogger logger = adapter.getLogger(LogServiceAdapterTest.class, FormatterLogger.class);
+        var logger = adapter.getLogger(LogServiceAdapterTest.class, FormatterLogger.class);
         assertEquals(LogServiceAdapterTest.class.getName(), logger.getName());
         logger.info("Message %d", 123);
         assertEquals("[INFO] Message 123", logservice.getLogmessages().get(0));
