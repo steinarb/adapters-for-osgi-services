@@ -25,7 +25,6 @@ import org.osgi.service.log.FormatterLogger;
 import org.osgi.service.log.LogService;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
-@SuppressWarnings("rawtypes")
 class LogServiceAdapterTest {
 
     @Test
