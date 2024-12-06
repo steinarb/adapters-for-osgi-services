@@ -321,14 +321,13 @@ class LoggerAdapterTest {
     }
 
     private LoggerConsumer<Exception> createMockLoggerConsumer() {
-        var consumer = new LoggerConsumer<Exception>() {
+        return new LoggerConsumer<Exception>() {
 
             @Override
             public void accept(Logger l) throws Exception {
                 /* Do nothing */
             }
         };
-        return consumer;
     }
 
 }
