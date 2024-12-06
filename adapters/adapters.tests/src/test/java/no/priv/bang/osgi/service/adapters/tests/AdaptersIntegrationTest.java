@@ -34,6 +34,7 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 public class AdaptersIntegrationTest extends KarafTestSupport {
 
     @Configuration
+    @Override
     public Option[] config() {
         final var logserviceAdapterFeatureRepo = maven()
             .groupId("no.priv.bang.osgi.service.adapters")
