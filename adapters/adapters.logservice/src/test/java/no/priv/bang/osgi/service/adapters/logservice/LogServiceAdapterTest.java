@@ -23,8 +23,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.FormatterLogger;
 import org.osgi.service.log.LogService;
-import org.osgi.service.log.Logger;
-
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 @SuppressWarnings("rawtypes")
