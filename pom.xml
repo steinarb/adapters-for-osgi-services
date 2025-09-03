@@ -37,6 +37,7 @@
     </modules>
 
     <properties>
+        <junit.jupiter.version>5.13.4</junit.jupiter.version>
         <sonar.issue.ignore.multicriteria>e1</sonar.issue.ignore.multicriteria>
         <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S1874</sonar.issue.ignore.multicriteria.e1.ruleKey>
         <sonar.issue.ignore.multicriteria.e1.resourceKey>**/adapters.logservice/**/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
