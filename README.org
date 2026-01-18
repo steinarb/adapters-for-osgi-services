@@ -11,7 +11,7 @@ At that point you will either have to resolve a SonarQube bug as a false positiv
 [[https://github.com/steinarb/adapters-for-osgi-services/actions/workflows/adapters-for-osgi-services-maven-ci-build.yml][file:https://github.com/steinarb/adapters-for-osgi-services/actions/workflows/adapters-for-osgi-services-maven-ci-build.yml/badge.svg]]
 [[https://coveralls.io/github/steinarb/adapters-for-osgi-services][file:https://coveralls.io/repos/github/steinarb/adapters-for-osgi-services/badge.svg]]
 [[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/api/project_badges/measure?project=steinarb_adapters-for-osgi-services&metric=alert_status#.svg]]
-[[https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters][file:https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service.adapters/adapters/badge.svg]]
+[[https://maven-badges.sml.io/sonatype-central/no.priv.bang.osgi.service.adapters/adapters][file:https://maven-badges.sml.io/sonatype-central/no.priv.bang.osgi.service.adapters/adapters/badge.svg]]
 [[https://www.javadoc.io/doc/no.priv.bang.osgi.service.adapters/adapters][file:https://www.javadoc.io/badge/no.priv.bang.osgi.service.adapters/adapters.svg]]
 
 [[https://sonarcloud.io/summary/new_code?id=steinarb_adapters-for-osgi-services][file:https://sonarcloud.io/images/project_badges/sonarcloud-white.svg]]
