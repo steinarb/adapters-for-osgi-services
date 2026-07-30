@@ -95,14 +95,6 @@ under the License.
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <releaseProfiles>release-sign-artifact</releaseProfiles>
-                    <tagNameFormat>adapters-@{project.version}</tagNameFormat>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
             </plugin>
