@@ -19,7 +19,7 @@ under the License.
     <parent>
         <groupId>no.priv.bang.osgi.service.adapters</groupId>
         <artifactId>adapters-parent</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>jacoco-coverage-report</artifactId>
 
