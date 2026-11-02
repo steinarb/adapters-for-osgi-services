@@ -76,6 +76,30 @@ class MockLoggerTest {
     }
 
     @Test
+    void testTraceWithLambda() {
+        var mockLogService = new MockLogService();
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.trace(l -> l.trace("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().getFirst()).contains("Message 123");
+    }
+
+    @Test
+    void testTraceWithLambdaNotTraceLevel() {
+        var mockLogService = new MockLogService();
+        mockLogService.setTraceEnabled(false);
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.trace(l -> l.debug("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+    }
+
+    @Test
     void testDebugOnLoggerWithName() {
         var mockLogService = new MockLogService();
         var name = "TestLogger";
@@ -125,6 +149,30 @@ class MockLoggerTest {
         logger.debug("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
         assertThat(mockLogService.getLogmessages()).isNotEmpty();
         assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
+    }
+
+    @Test
+    void testDebugWithLambda() {
+        var mockLogService = new MockLogService();
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.debug(l -> l.debug("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().getFirst()).contains("Message 123");
+    }
+
+    @Test
+    void testDebugWithLambdaNotDebugLevel() {
+        var mockLogService = new MockLogService();
+        mockLogService.setDebugEnabled(false);
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.debug(l -> l.info("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isEmpty();
     }
 
     @Test
@@ -180,6 +228,30 @@ class MockLoggerTest {
     }
 
     @Test
+    void testInfoWithLambda() {
+        var mockLogService = new MockLogService();
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.info(l -> l.info("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().getFirst()).contains("Message 123");
+    }
+
+    @Test
+    void testInfoWithLambdaNotInfoLevel() {
+        var mockLogService = new MockLogService();
+        mockLogService.setInfoEnabled(false);
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.info(l -> l.warn("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+    }
+
+    @Test
     void testWarningOnLoggerWithName() {
         var mockLogService = new MockLogService();
         var name = "TestLogger";
@@ -232,6 +304,30 @@ class MockLoggerTest {
     }
 
     @Test
+    void testWarningWithLambda() {
+        var mockLogService = new MockLogService();
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.warn(l -> l.warn("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().getFirst()).contains("Message 123");
+    }
+
+    @Test
+    void testWarningWithLambdaNotWarningLevel() {
+        var mockLogService = new MockLogService();
+        mockLogService.setWarnEnabled(false);
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.warn(l -> l.error("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+    }
+
+    @Test
     void testErrorOnLoggerWithName() {
         var mockLogService = new MockLogService();
         var name = "TestLogger";
@@ -281,6 +377,30 @@ class MockLoggerTest {
         logger.error("Message {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789), new RuntimeException("An exception"));
         assertThat(mockLogService.getLogmessages()).isNotEmpty();
         assertThat(mockLogService.getLogmessages().get(0)).contains("An exception");
+    }
+
+    @Test
+    void testErrorWithLambda() {
+        var mockLogService = new MockLogService();
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.error(l -> l.error("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isNotEmpty();
+        assertThat(mockLogService.getLogmessages().getFirst()).contains("Message 123");
+    }
+
+    @Test
+    void testErrorWithLambdaNotErrorLevel() {
+        var mockLogService = new MockLogService();
+        mockLogService.setErrorEnabled(false);
+        var name = "TestLogger";
+        var logger = mockLogService.getLogger(name);
+
+        assertThat(mockLogService.getLogmessages()).isEmpty();
+        logger.error(l -> l.audit("Message {}", Integer.valueOf(123)));
+        assertThat(mockLogService.getLogmessages()).isEmpty();
     }
 
     @Test

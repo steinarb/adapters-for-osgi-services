@@ -75,8 +75,9 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void trace(LoggerConsumer<E> consumer) throws E {
-        /* Empty implementation */
-
+        if (isTraceEnabled()) {
+            consumer.accept(this);
+        }
     }
 
     @Override
@@ -118,8 +119,9 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void debug(LoggerConsumer<E> consumer) throws E {
-        /* Empty implementation */
-
+        if (isDebugEnabled()) {
+            consumer.accept(this);
+        }
     }
 
     @Override
@@ -161,8 +163,9 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void info(LoggerConsumer<E> consumer) throws E {
-        /* Empty implementation */
-
+        if (isInfoEnabled()) {
+            consumer.accept(this);
+        }
     }
 
     @Override
@@ -204,8 +207,9 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void warn(LoggerConsumer<E> consumer) throws E {
-        /* Empty implementation */
-
+        if (isWarnEnabled()) {
+            consumer.accept(this);
+        }
     }
 
     @Override
@@ -247,8 +251,9 @@ public class MockLogger implements Logger {
 
     @Override
     public <E extends Exception> void error(LoggerConsumer<E> consumer) throws E {
-        /* Empty implementation */
-
+        if (isErrorEnabled()) {
+            consumer.accept(this);
+        }
     }
 
     @SuppressWarnings("deprecation")
