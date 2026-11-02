@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.mocks.logservice;
 /*
- * Copyright 2021-2023 Steinar Bang
+ * Copyright 2021-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.mocks.logservice;
 
 import org.osgi.service.log.LogService;
 import org.osgi.service.log.Logger;
@@ -41,6 +41,7 @@ public class MockLogger implements Logger {
         return mockLogService.isTraceEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void trace(String message) {
         if (isTraceEnabled()) {
@@ -48,6 +49,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void trace(String format, Object arg) {
         if (isTraceEnabled()) {
@@ -55,6 +57,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void trace(String format, Object arg1, Object arg2) {
         if (isTraceEnabled()) {
@@ -62,6 +65,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void trace(String format, Object... arguments) {
         if (isTraceEnabled()) {
@@ -80,6 +84,7 @@ public class MockLogger implements Logger {
         return mockLogService.isDebugEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void debug(String message) {
         if (isDebugEnabled()) {
@@ -87,6 +92,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void debug(String format, Object arg) {
         if (isDebugEnabled()) {
@@ -94,6 +100,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void debug(String format, Object arg1, Object arg2) {
         if (isDebugEnabled()) {
@@ -101,6 +108,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void debug(String format, Object... arguments) {
         if (isDebugEnabled()) {
@@ -119,6 +127,7 @@ public class MockLogger implements Logger {
         return mockLogService.isInfoEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void info(String message) {
         if (isInfoEnabled()) {
@@ -126,6 +135,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void info(String format, Object arg) {
         if (isInfoEnabled()) {
@@ -133,6 +143,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void info(String format, Object arg1, Object arg2) {
         if (isInfoEnabled()) {
@@ -140,6 +151,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void info(String format, Object... arguments) {
         if (isInfoEnabled()) {
@@ -158,6 +170,7 @@ public class MockLogger implements Logger {
         return mockLogService.isWarnEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void warn(String message) {
         if (isWarnEnabled()) {
@@ -165,6 +178,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void warn(String format, Object arg) {
         if (isWarnEnabled()) {
@@ -172,6 +186,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void warn(String format, Object arg1, Object arg2) {
         if (isWarnEnabled()) {
@@ -179,6 +194,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void warn(String format, Object... arguments) {
         if (isWarnEnabled()) {
@@ -197,6 +213,7 @@ public class MockLogger implements Logger {
         return mockLogService.isErrorEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void error(String message) {
         if (isErrorEnabled()) {
@@ -204,6 +221,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void error(String format, Object arg) {
         if (isErrorEnabled()) {
@@ -211,6 +229,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void error(String format, Object arg1, Object arg2) {
         if (isErrorEnabled()) {
@@ -218,6 +237,7 @@ public class MockLogger implements Logger {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void error(String format, Object... arguments) {
         if (isErrorEnabled()) {
@@ -231,21 +251,25 @@ public class MockLogger implements Logger {
 
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void audit(String message) {
         mockLogService.log(LogService.LOG_ERROR, message);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void audit(String format, Object arg) {
         mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg)));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void audit(String format, Object arg1, Object arg2) {
         mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.format(format, arg1, arg2)));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void audit(String format, Object... arguments) {
         mockLogService.log(LogService.LOG_ERROR, messageAndThrowable(MessageFormatter.arrayFormat(format, arguments)));
