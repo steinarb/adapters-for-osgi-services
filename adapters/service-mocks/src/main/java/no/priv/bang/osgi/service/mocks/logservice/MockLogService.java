@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.mocks.logservice;
 /*
- * Copyright 2017-2021 Steinar Bang
+ * Copyright 2017-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.mocks.logservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class MockLogService implements LogService {
      *  @param message the message to log
      */
     public void log(int level, String message) {
-        String messageWithLevel = errorLevel[level] + message;
+        var messageWithLevel = errorLevel[level] + message;
         logmessages.add(messageWithLevel);
         System.err.println(messageWithLevel);
     }
@@ -128,7 +128,7 @@ public class MockLogService implements LogService {
      * @param exception the exception that caused the error situation
      */
     public void log(int level, String message, Throwable exception) {
-        String messageWithLevel = errorLevel[level] + message + " " + exception.toString();
+        var messageWithLevel = errorLevel[level] + message + " " + exception.toString();
         logmessages.add(messageWithLevel);
         System.err.println(messageWithLevel);
     }
@@ -143,7 +143,7 @@ public class MockLogService implements LogService {
      * @param message the message to log
      */
     public void log(ServiceReference sr, int level, String message) {
-        String messageWithLevel = errorLevel[level] + sr + " " + message;
+        var messageWithLevel = errorLevel[level] + sr + " " + message;
         logmessages.add(messageWithLevel);
         System.err.println(messageWithLevel);
     }
@@ -159,7 +159,7 @@ public class MockLogService implements LogService {
      * @param exception the exception that caused the error situation
      */
     public void log(ServiceReference sr, int level, String message, Throwable exception) {
-        String messageWithLevel = errorLevel[level] + sr + " " + message + " " + exception.toString();
+        var messageWithLevel = errorLevel[level] + sr + " " + message + " " + exception.toString();
         logmessages.add(messageWithLevel);
         System.err.println(messageWithLevel);
     }
