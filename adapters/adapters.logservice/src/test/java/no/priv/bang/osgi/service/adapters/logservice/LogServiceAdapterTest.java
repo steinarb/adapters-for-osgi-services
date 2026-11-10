@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.adapters.logservice;
 /*
- * Copyright 2017-2024 Steinar Bang
+ * Copyright 2017-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.adapters.logservice;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,6 +27,7 @@ import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class LogServiceAdapterTest {
 
+    @SuppressWarnings("deprecation")
     @Test
     void testSaveAndPassOnLogMessages() {
         var logservice = new MockLogService();
@@ -69,6 +70,7 @@ class LogServiceAdapterTest {
      * Corner case test: verify that injecting a null log serivice will not
      * clear saved log messages
      */
+    @SuppressWarnings("deprecation")
     @Test
     void testNullLogServiceInjection() {
         var logservice = new MockLogService();

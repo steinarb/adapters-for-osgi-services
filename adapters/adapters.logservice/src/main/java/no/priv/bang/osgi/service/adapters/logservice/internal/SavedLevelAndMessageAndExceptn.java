@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.adapters.logservice.internal;
 /*
- * Copyright 2017, 2020 Steinar Bang
+ * Copyright 2017, 2020. 2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.adapters.logservice.internal;
 
 import org.osgi.service.log.LogService;
 
@@ -26,6 +26,7 @@ public class SavedLevelAndMessageAndExceptn extends SavedLevelAndMessage {
         this.exception = exception;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void sendToService(LogService logservice) {
         logservice.log(level, message, exception);

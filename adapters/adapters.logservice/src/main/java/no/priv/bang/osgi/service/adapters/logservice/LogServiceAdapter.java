@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.adapters.logservice;
 /*
- * Copyright 2017-2024 Steinar Bang
+ * Copyright 2017-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.adapters.logservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +59,7 @@ public class LogServiceAdapter implements LogService {
      * a wrapped {@link LogService} or saves the log messages if no
      * LogService has been injected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void log(int level, String message) {
         if (logservice != null) {
@@ -73,6 +74,7 @@ public class LogServiceAdapter implements LogService {
      * a wrapped {@link LogService} or saves the log messages if no
      * LogService has been injected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void log(int level, String message, Throwable exception) {
         if (logservice != null) {
@@ -87,6 +89,7 @@ public class LogServiceAdapter implements LogService {
      * a wrapped {@link LogService} or saves the log messages if no
      * LogService has been injected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void log(ServiceReference sr, int level, String message) {
         if (logservice != null) {
@@ -101,6 +104,7 @@ public class LogServiceAdapter implements LogService {
      * a wrapped {@link LogService} or saves the log messages if no
      * LogService has been injected.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public void log(ServiceReference sr, int level, String message, Throwable exception) {
         if (logservice != null) {
