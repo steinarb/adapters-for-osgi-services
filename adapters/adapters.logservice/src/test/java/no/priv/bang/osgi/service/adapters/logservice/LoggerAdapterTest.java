@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.adapters.logservice;
 /*
- * Copyright 2021-2024 Steinar Bang
+ * Copyright 2021-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +14,61 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.adapters.logservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.osgi.service.log.LogService;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerConsumer;
+import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class LoggerAdapterTest {
+    private static ch.qos.logback.classic.Logger logger;
+    private ListAppender<ILoggingEvent> logappender;
+
+    @BeforeEach
+    void setup() {
+        logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(LoggerAdapterTest.class);
+        logappender = new ListAppender<>();
+        logappender.start();
+        logger.addAppender(logappender);
+    }
+
+    @AfterEach
+    void teardown() {
+        logger.detachAppender(logappender);
+        logappender.stop();
+    }
+
+    @Test
+    void testTraceOnFallbackSlf4jLogger() {
+        logger.setLevel(Level.TRACE);
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        assertThat(adapter.getName()).isEqualTo(getClass().getCanonicalName());
+        assertThat(logappender.list).isEmpty();
+        adapter.trace("message");
+        assertThat(logappender.list).hasSize(1);
+        adapter.trace("message {}", "arrgh");
+        assertThat(logappender.list).hasSize(2);
+        adapter.trace("message {} {}", "arg", 1);
+        assertThat(logappender.list).hasSize(3);
+        adapter.trace("message {} {} {}", "arg", 1, 3.14);
+        assertThat(logappender.list).hasSize(4);
+        adapter.trace(l -> l.trace("message in lambda"));
+        assertThat(logappender.list).hasSize(5);
+    }
 
     @Test
     void testTraceOnLoggerWithName() {
@@ -68,6 +108,7 @@ class LoggerAdapterTest {
         adapter.trace("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     @Test
@@ -81,6 +122,23 @@ class LoggerAdapterTest {
         var consumer = createMockLoggerConsumer();
         adapter.trace(consumer);
         verify(logger).trace(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
+    void testDebugOnFallbackSlf4jLogger() {
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        assertThat(adapter.getName()).isEqualTo(getClass().getCanonicalName());
+        assertThat(logappender.list).isEmpty();
+        adapter.debug("message");
+        assertThat(logappender.list).hasSize(1);
+        adapter.debug("message {}", "arrgh");
+        assertThat(logappender.list).hasSize(2);
+        adapter.debug("message {} {}", "arg", 1);
+        assertThat(logappender.list).hasSize(3);
+        adapter.debug("message {} {} {}", "arg", 1, 3.14);
+        assertThat(logappender.list).hasSize(4);
+        adapter.debug(l -> l.debug("message in lambda"));
+        assertThat(logappender.list).hasSize(5);
     }
 
     @Test
@@ -121,6 +179,7 @@ class LoggerAdapterTest {
         adapter.debug("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     @Test
@@ -134,6 +193,23 @@ class LoggerAdapterTest {
         var consumer = createMockLoggerConsumer();
         adapter.debug(consumer);
         verify(logger).debug(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
+    void testInfoOnFallbackSlf4jLogger() {
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        assertThat(adapter.getName()).isEqualTo(getClass().getCanonicalName());
+        assertThat(logappender.list).isEmpty();
+        adapter.info("message");
+        assertThat(logappender.list).hasSize(1);
+        adapter.info("message {}", "arrgh");
+        assertThat(logappender.list).hasSize(2);
+        adapter.info("message {} {}", "arg", 1);
+        assertThat(logappender.list).hasSize(3);
+        adapter.info("message {} {} {}", "arg", 1, 3.14);
+        assertThat(logappender.list).hasSize(4);
+        adapter.info(l -> l.info("message in lambda"));
+        assertThat(logappender.list).hasSize(5);
     }
 
     @Test
@@ -174,6 +250,7 @@ class LoggerAdapterTest {
         adapter.info("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     @Test
@@ -187,6 +264,23 @@ class LoggerAdapterTest {
         var consumer = createMockLoggerConsumer();
         adapter.info(consumer);
         verify(logger).info(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
+    void testWarningOnFallbackSlf4jLogger() {
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        assertThat(adapter.getName()).isEqualTo(getClass().getCanonicalName());
+        assertThat(logappender.list).isEmpty();
+        adapter.warn("message");
+        assertThat(logappender.list).hasSize(1);
+        adapter.warn("message {}", "arrgh");
+        assertThat(logappender.list).hasSize(2);
+        adapter.warn("message {} {}", "arg", 1);
+        assertThat(logappender.list).hasSize(3);
+        adapter.warn("message {} {} {}", "arg", 1, 3.14);
+        assertThat(logappender.list).hasSize(4);
+        adapter.warn(l -> l.warn("message in lambda"));
+        assertThat(logappender.list).hasSize(5);
     }
 
     @Test
@@ -227,6 +321,7 @@ class LoggerAdapterTest {
         adapter.warn("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     @Test
@@ -240,6 +335,23 @@ class LoggerAdapterTest {
         var consumer = createMockLoggerConsumer();
         adapter.warn(consumer);
         verify(logger).warn(ArgumentMatchers.<LoggerConsumer<? extends Exception>>any());
+    }
+
+    @Test
+    void testErrorOnFallbackSlf4jLogger() {
+        var adapter = new LoggerAdapter(LoggerAdapterTest.class);
+        assertThat(adapter.getName()).isEqualTo(getClass().getCanonicalName());
+        assertThat(logappender.list).isEmpty();
+        adapter.error("message");
+        assertThat(logappender.list).hasSize(1);
+        adapter.error("message {}", "arrgh");
+        assertThat(logappender.list).hasSize(2);
+        adapter.error("message {} {}", "arg", 1);
+        assertThat(logappender.list).hasSize(3);
+        adapter.error("message {} {} {}", "arg", 1, 3.14);
+        assertThat(logappender.list).hasSize(4);
+        adapter.error(l -> l.warn("message in lambda"));
+        assertThat(logappender.list).hasSize(5);
     }
 
     @Test
@@ -280,6 +392,7 @@ class LoggerAdapterTest {
         adapter.error("Message 8 {} {} {}", Integer.valueOf(123), Integer.valueOf(456), Integer.valueOf(789));
         var logCount8 = mockLogService.getLogmessages().size();
         assertEquals(logCount4, logCount8);
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     @Test
@@ -318,6 +431,7 @@ class LoggerAdapterTest {
         var logCount4 = mockLogService.getLogmessages().size();
         assertThat(logCount4).isGreaterThan(logCount3);
         assertEquals("[ERROR] Message 4 123 456 789", mockLogService.getLogmessages().get(logCount4 - 1));
+        assertThat(logappender.list).isEmpty(); // Verify slf4j received no logs because logservice eats them
     }
 
     private LoggerConsumer<Exception> createMockLoggerConsumer() {

@@ -1,5 +1,6 @@
+package no.priv.bang.osgi.service.adapters.logservice;
 /*
- * Copyright 2021 Steinar Bang
+ * Copyright 2021-2026 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +14,12 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.osgi.service.adapters.logservice;
 
 import org.osgi.service.log.LogService;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerConsumer;
+
+import no.priv.bang.osgi.service.adapters.logservice.internal.Slf4jLogger;
 
 public class LoggerAdapter implements Logger {
 
@@ -26,6 +28,7 @@ public class LoggerAdapter implements Logger {
 
     public LoggerAdapter(Class<?> clazz) {
         this.clazz = clazz;
+        this.logger = new Slf4jLogger(clazz);
     }
 
     public void setLogService(LogService logService) {
